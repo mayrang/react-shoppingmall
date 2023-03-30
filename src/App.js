@@ -1,4 +1,3 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import AddProduct from "./pages/AddProduct";
 import Cart from "./pages/Cart";
@@ -6,6 +5,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Products from "./pages/Products";
 import Root from "./pages/Root";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
