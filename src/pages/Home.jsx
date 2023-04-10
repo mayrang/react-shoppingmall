@@ -1,13 +1,13 @@
 import React from "react";
-import { getLoginApi } from "./../firebase/auth";
+import { login } from "./../firebase/auth";
 
 export default function Home() {
   const clickLogin = () => {
-    getLoginApi();
+    login();
   };
   return (
     <div>
-      <button onClick={clickLogin}></button>
+      <button onClick={clickLogin}>로그인</button>
     </div>
   );
 }

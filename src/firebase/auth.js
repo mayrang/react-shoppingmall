@@ -1,30 +1,26 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "./init";
+import { getDatabase, get, ref } from "firebase/database";
 
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+export const auth = getAuth();
+export const provider = new GoogleAuthProvider();
+const database = getDatabase(app);
 
-export function getLoginApi() {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      console.log(token, user);
-      // ...
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      return { errorCode, errorMessage };
-      // ...
+export function login() {
+  signInWithPopup(auth, provider).catch(console.error);
+}
+
+export async function adminUser(user) {
+  return get(ref(database, "admins")) //
+    .then((snapshot) => {
+      console.log("set");
+      if (snapshot.exists()) {
+        const admins = snapshot.val();
+        const isAdmin = admins.includes(user.uid);
+
+        return { ...user, isAdmin };
+      }
+      console.log(user);
+      return user;
     });
 }
