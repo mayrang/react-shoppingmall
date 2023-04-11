@@ -1,4 +1,4 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { app } from "./init";
 import { getDatabase, get, ref } from "firebase/database";
 
@@ -10,6 +10,9 @@ export function login() {
   signInWithPopup(auth, provider).catch(console.error);
 }
 
+export function logout() {
+  signOut(auth).catch(console.error);
+}
 export async function adminUser(user) {
   return get(ref(database, "admins")) //
     .then((snapshot) => {
