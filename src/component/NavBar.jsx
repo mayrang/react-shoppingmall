@@ -10,9 +10,10 @@ export default function NavBar() {
   console.log(user);
   return (
     <div className="w-screen max-w-[1140px] flex items-center justify-center h-12 m-auto">
-      <div className="w-full flex items-center justify-between h-full bg-zinc-100 px-4 ">
-        <Link to="/">
-          <FiShoppingBag className="text-2xl" />
+      <div className="w-full flex items-center justify-between h-full px-4 ">
+        <Link to="/" className="text-2xl inline-flex items-center">
+          <FiShoppingBag className="mr-2 text-3xl" />
+          Style Avenue
         </Link>
         <div className="">
           {!user && (
