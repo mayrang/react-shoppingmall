@@ -1,6 +1,6 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { app } from "./init";
-import { getDatabase, get, ref } from "firebase/database";
+import { getDatabase, get, ref, query, equalTo, orderByChild } from "firebase/database";
 
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
@@ -14,16 +14,17 @@ export function logout() {
   signOut(auth).catch(console.error);
 }
 export async function adminUser(user) {
-  return get(ref(database, "admins")) //
+  console.log(user.uid);
+  return get(query(ref(database, "admins"), orderByChild("uid"), equalTo(user.uid))) //
     .then((snapshot) => {
       console.log("set");
+      console.log(snapshot.val());
       if (snapshot.exists()) {
-        const admins = snapshot.val();
-        const isAdmin = admins.includes(user.uid);
+        //const isAdmin = admins.includes(user.uid);
 
-        return { ...user, isAdmin };
+        return { ...user, isAdmin: true };
       }
       console.log(user);
-      return user;
+      return { ...user, isAdmin: false };
     });
 }

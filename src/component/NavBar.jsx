@@ -8,11 +8,12 @@ import { BsCart3, BsPencilFill } from "react-icons/bs";
 
 export default function NavBar() {
   const user = useRecoilValue(authAtom);
+  console.log(user);
   return (
     <div className="w-screen max-w-[1140px] flex items-center justify-center h-12 m-auto">
       <div className="w-full flex items-center justify-between h-full px-4 ">
         <Link to="/" className="text-2xl inline-flex items-center">
-          <FiShoppingBag className="mr-2 text-3xl" />
+          <FiShoppingBag className="mr-2 text-3xl text-signiture" />
           Style Avenue
         </Link>
         <div className="flex items-center">
@@ -22,9 +23,12 @@ export default function NavBar() {
               <button className="text-2xl ml-3">
                 <BsCart3 />
               </button>
-              <button className="text-xl ml-3">
-                <BsPencilFill />
-              </button>
+              {user.isAdmin && (
+                <Link to="/products/add" className="text-xl ml-3">
+                  <BsPencilFill />
+                </Link>
+              )}
+
               <button className="ml-3 inline-flex items-center text-sm">
                 <img src={user.photoURL} alt="profile" className="rounded-full w-8 h-8 bg-cover mr-2" />
                 {user.displayName}
