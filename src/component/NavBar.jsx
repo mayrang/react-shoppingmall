@@ -29,19 +29,19 @@ export default function NavBar() {
                 </Link>
               )}
 
-              <button className="ml-3 inline-flex items-center text-sm">
+              <button className="ml-3 inline-flex items-center text-sm font-semibold">
                 <img src={user.photoURL} alt="profile" className="rounded-full w-8 h-8 bg-cover mr-2" />
                 {user.displayName}
               </button>
             </>
           )}
           {!user && (
-            <button onClick={login} className="bg-blue-500 py-2 px-3 rounded text-sm ml-6">
+            <button onClick={login} className="bg-blue-500 py-2 px-4 rounded text-sm text-white ml-6">
               로그인
             </button>
           )}
           {user && (
-            <button onClick={logout} className="bg-red-500 p-2 rounded text-sm ml-6">
+            <button onClick={logout} className="bg-red-500 p-2 rounded text-sm text-white ml-6">
               로그아웃
             </button>
           )}
