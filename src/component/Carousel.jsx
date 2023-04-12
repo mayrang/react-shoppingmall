@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 export default function Carousel() {
   return (
     <Slider
-      className="w-full h-auto overflow-y-clip overflow-x-hidden"
+      className="w-full h-auto overflow-y-clip overflow-x-hidden "
       dots={true}
       infinite={true}
       nextArrow={false}
