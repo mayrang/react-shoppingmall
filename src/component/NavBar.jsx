@@ -10,7 +10,7 @@ export default function NavBar() {
   const user = useRecoilValue(authAtom);
   console.log(user);
   return (
-    <div className="w-screen max-w-[1140px] flex items-center justify-center h-12 m-auto">
+    <div className="w-screen max-w-[1140px] flex items-center justify-center h-16 m-auto">
       <div className="w-full flex items-center justify-between h-full px-4 ">
         <Link to="/" className="text-2xl inline-flex items-center">
           <FiShoppingBag className="mr-2 text-3xl text-signiture" />
