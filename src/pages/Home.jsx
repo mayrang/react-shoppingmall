@@ -5,7 +5,16 @@ export default function Home() {
   return (
     <div>
       <Carousel />
-      <div className="w-full max-w-[1140px] flex flex-col items-center"></div>
+      <div className="mx-auto w-screen max-w-[1140px] flex flex-col items-center justify-center">
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+      </div>
     </div>
   );
 }

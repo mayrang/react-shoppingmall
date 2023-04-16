@@ -2,14 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import "./Carousel.scss";
 export default function Carousel() {
   return (
     <Slider
-      className="w-full h-auto overflow-y-clip overflow-x-hidden "
+      className="w-full h-auto mb-16"
       dots={true}
       infinite={true}
       nextArrow={false}
+      z
       pauseOnHover={true}
       fade={true}
       prevArrow={false}
