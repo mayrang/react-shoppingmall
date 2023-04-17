@@ -10,11 +10,15 @@ export default function Home() {
   return (
     <div>
       <Carousel />
-      <div className="w-full max-w-[1140px] flex flex-col items-center">
-        <button className="p-2" onClick={() => testRef.current.click()}>
-          이미지 테스트
-        </button>
-        <input type="file" ref={testRef} onChange={changeFile} accept="image/*" />
+      <div className="mx-auto w-screen max-w-[1140px] flex flex-col items-center justify-center">
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
+        <div className="h-96">hi</div>
       </div>
     </div>
   );
