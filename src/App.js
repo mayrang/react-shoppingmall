@@ -11,6 +11,7 @@ import { authAtom } from "./recoil/auth";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { adminUser, auth } from "./firebase/auth";
+import ProtectedPath from "./component/ProtectedPath";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,14 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "/products", element: <Products /> },
       { path: "/cart", element: <Cart /> },
-      { path: "/product/add", element: <AddProduct /> },
+      {
+        path: "/products/add",
+        element: (
+          <ProtectedPath adminRequired={true}>
+            <AddProduct />
+          </ProtectedPath>
+        ),
+      },
       { path: "/product/detail/:productId", element: <ProductDetail /> },
     ],
   },
