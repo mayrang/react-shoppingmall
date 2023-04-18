@@ -14,10 +14,8 @@ export function logout() {
   signOut(auth).catch(console.error);
 }
 export async function adminUser(user) {
-  console.log(user.uid);
   return get(query(ref(database, "admins"), orderByChild("uid"), equalTo(user.uid))) //
     .then((snapshot) => {
-      console.log("set");
       console.log(snapshot.val());
       if (snapshot.exists()) {
         //const isAdmin = admins.includes(user.uid);

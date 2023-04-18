@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { imageUpload } from "../cloudinary/imageUpload";
+import ErrorMessage from "../component/ErrorMessage";
+import { addProduct } from "../firebase/product";
+import { useNavigate } from "react-router-dom";
+import cls from "classnames";
 
 export default function AddProduct() {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("#");
+  const [description, setDescription] = useState("");
+  const [options, setOptions] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   const changeFile = async (e) => {
     const url = await imageUpload(e.target.files);
     setImageUrl(url);
@@ -10,21 +21,135 @@ export default function AddProduct() {
   const handleDelteImage = () => {
     setImageUrl(null);
   };
+
+  const submitProduct = async (e) => {
+    e.preventDefault();
+    let copyErrors = {};
+    if (title.trim() === "") {
+      copyErrors = { ...copyErrors, title: "제품명은 비워놓을 수 없어요." };
+    }
+    if (price.trim() === "") {
+      copyErrors = { ...copyErrors, price: "가격은 비워놓을 수 없어요." };
+    } else if (!isNaN(price)) {
+      copyErrors = { ...copyErrors, price: "가격에는 숫자만 써주세요." };
+    }
+    if (category === "#") {
+      copyErrors = { ...copyErrors, category: "카테고리 선택을 해주세요." };
+    }
+    if (options.trim() === "") {
+      copyErrors = { ...copyErrors, options: "옵션은 비워놓을 수 없어요." };
+    }
+
+    const optionList = options.replace(/ /g, "");
+
+    if (Object.keys(copyErrors).length > 0) {
+      setErrors(copyErrors);
+    }
+    const result = await addProduct({
+      title,
+      price,
+      category,
+      description,
+      imageUrl,
+      options: optionList,
+    });
+    if (result === "success") {
+      navigate("/", { replace: true });
+    } else {
+      alert("저장 과정에서의 에러");
+      return;
+    }
+  };
   return (
-    <form className="pt-52 flex flex-col items-center w-screen max-w-[1140px] mx-auto">
-      <div className="w-full">
-        <label htmlFor="image">이미지</label>
-        <div className="border rounded-md p-2 w-full">
-          <div className="flex item-center justify-between">
-            <input type="file" className="w-1/2" accept="image/*" onChange={changeFile} />
-            {imageUrl && (
-              <button className=" px-2 py-1 bg-red-500 rounded text-white" onClick={handleDelteImage}>
-                삭제
-              </button>
-            )}
-          </div>
-          {imageUrl && <img src={imageUrl} className="mt-3" alt="쇼핑 이미지" />}
+    <form
+      className="pt-24 xl:pt-36  flex flex-col justify-center w-screen max-w-[1140px] mx-auto px-2"
+      onSubmit={submitProduct}
+    >
+      <label htmlFor="image">이미지</label>
+      <div className={cls("border rounded-md p-2 w-full  mt-2", { "w-[400px] lg:w-[520px]": imageUrl })}>
+        <div className="flex item-center justify-between">
+          <input id="image" type="file" className="w-1/2" accept="image/*" onChange={changeFile} />
+          {imageUrl && (
+            <button className=" px-2 py-1 bg-red-500 rounded text-white" onClick={handleDelteImage}>
+              삭제
+            </button>
+          )}
         </div>
+        {imageUrl && (
+          <img src={imageUrl} className="mt-3 w-[380px] h-[450px] lg:w-[500px] lg:h-[600px]" alt="쇼핑 이미지" />
+        )}
+      </div>
+      <div className="w-full mt-4">
+        <label htmlFor="title">제품명</label>
+        <input
+          id="title"
+          className="border rounded-md p-2 w-full mt-2 outline-none"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="제품명을 입력해주세요"
+        />
+        {errors && errors.title && <ErrorMessage message={errors.title} />}
+      </div>
+      <div className="w-full mt-4">
+        <label htmlFor="price">가격</label>
+
+        <input
+          id="price"
+          className="border rounded-md p-2 w-full mt-2 outline-none"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="가격을 입력해주세요(숫자만 입력)"
+        />
+        {errors && errors.price && <ErrorMessage message={errors.price} />}
+      </div>
+      <div className="w-full mt-4">
+        <label htmlFor="category"></label>
+
+        <select
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="border rounded-md p-2 w-full mt-2 outline-none"
+        >
+          <option value="#">카테고리를 선택해주세요</option>
+          <option value="top">상의</option>
+          <option value="outer">아우터</option>
+          <option value="bottom">하의</option>
+          <option value="shoes">신발</option>
+          <option value="bag">가방</option>
+          <option value="accessory">악세서리</option>
+          <option value="etc">기타</option>
+        </select>
+        {errors && errors.category && <ErrorMessage message={errors.category} />}
+      </div>
+      <div className="w-full mt-4">
+        <label htmlFor="description">제품 설명</label>
+
+        <textarea
+          rows={3}
+          id="discription"
+          className="border rounded-md p-2 w-full mt-2 outline-none"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="가격을 입력해주세요"
+        />
+      </div>
+      <div className="w-full mt-4">
+        <label htmlFor="options">옵션</label>
+
+        <input
+          id="options"
+          className="border rounded-md p-2 w-full mt-2 outline-none"
+          value={options}
+          onChange={(e) => setOptions(e.target.value)}
+          placeholder="옵션을 입력해주세요(쉼표로 구분)"
+        />
+        {errors && errors.options && <ErrorMessage message={errors.options} />}
+      </div>
+      <div className="flex items-center justify-end mt-3">
+        <button type="submit" className="py-2 px-5 bg-blue-500 rounded border-none outline-none text-white">
+          추가
+        </button>
       </div>
     </form>
   );
