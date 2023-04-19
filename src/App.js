@@ -12,6 +12,9 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { adminUser, auth } from "./firebase/auth";
 import ProtectedPath from "./component/ProtectedPath";
+import { QueryClient, QueryClientProvider, useQueryClient } from "react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -44,7 +47,11 @@ function App() {
       setUser(updatedUser);
     });
   }, []);
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
