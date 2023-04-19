@@ -1,15 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BsCart3, BsPencilFill } from "react-icons/bs";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../recoil/auth";
 import { login, logout } from "../firebase/auth";
+import { motion } from "framer-motion";
 
 export default function MenuDrawer({ handleShowMenu }) {
   const user = useRecoilValue(authAtom);
   return (
     <div className="fixed h-full w-full mt-16 z-10 m-auto overflow-hidden">
-      <div className="h-2/5 w-full bg-zinc-50 mx-auto flex flex-col items-center relative text-signiture">
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="h-2/5 w-full bg-zinc-50 mx-auto flex flex-col items-center relative text-signiture"
+      >
         <Link className="py-3 w-full text-center border-b  text-3xl" to="/products">
           Products
         </Link>
@@ -33,7 +38,7 @@ export default function MenuDrawer({ handleShowMenu }) {
             로그아웃
           </button>
         )}
-      </div>
+      </motion.div>
       <div onClick={handleShowMenu} className="bg-black opacity-25 h-3/5 w-full"></div>
     </div>
   );

@@ -23,10 +23,13 @@ export default function NavBar() {
             Style Avenue
           </Link>
           <div className="flex items-center md:hidden">
-            <button className="mr-4 inline-flex items-center text-sm font-semibold">
+            {user&&(
+              <button className="mr-4 inline-flex items-center text-sm font-semibold">
               <img src={user.photoURL} alt="profile" className="rounded-full w-8 h-8 bg-cover mr-1" />
               {user.displayName}
             </button>
+            )}
+            
             <button className="text-3xl" onClick={handleShowMenu}>
               {showMenu ? <BiX /> : <BiMenu />}
             </button>
