@@ -1,13 +1,8 @@
-import React, { useRef } from "react";
+import React from "react";
 import Carousel from "../component/Carousel";
-import { imageUpload } from "../cloudinary/imageUpload";
 import ProductList from "../component/ProductList";
 
 export default function Home() {
-  const testRef = useRef();
-  const changeFile = async (e) => {
-    await imageUpload(e.target.files);
-  };
   return (
     <>
       <Carousel />
