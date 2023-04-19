@@ -8,18 +8,9 @@ export default function Home() {
     await imageUpload(e.target.files);
   };
   return (
-    <div>
+    <>
       <Carousel />
-      <div className="mx-auto w-screen max-w-[1140px] flex flex-col items-center justify-center">
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-        <div className="h-96">hi</div>
-      </div>
-    </div>
+      <div className="mx-auto w-screen max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center"></div>
+    </>
   );
 }

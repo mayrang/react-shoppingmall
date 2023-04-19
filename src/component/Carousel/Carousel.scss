@@ -1,0 +1,45 @@
+.dots-slick {
+  display: flex !important;
+  align-items: center;
+  width: 100vw;
+  overflow: hidden;
+  justify-content: center;
+  padding: 0;
+}
+
+.dots-slick li {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dots-slick button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  cursor: pointer;
+  color: gray;
+  border: 0;
+  outline: none;
+  background: lightgray;
+}
+
+.slick-active button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  cursor: pointer;
+  color: gray;
+  border: 0;
+  outline: none;
+  background: gray;
+}
