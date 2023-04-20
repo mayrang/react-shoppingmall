@@ -5,6 +5,7 @@ import { addProduct } from "../firebase/product";
 import { useNavigate } from "react-router-dom";
 import cls from "classnames";
 import { processPrice } from "../util/processPrice";
+import DetailImage from "../component/DetailImage";
 
 export default function AddProduct() {
   const [title, setTitle] = useState("");
@@ -34,17 +35,22 @@ export default function AddProduct() {
     let copyErrors = {};
     if (title.trim() === "") {
       copyErrors = { ...copyErrors, title: "제품명은 비워놓을 수 없어요." };
+      return;
     }
     if (price.trim() === "") {
       copyErrors = { ...copyErrors, price: "가격은 비워놓을 수 없어요." };
-    } else if (!isNaN(price)) {
+      return;
+    } else if (isNaN(price)) {
       copyErrors = { ...copyErrors, price: "가격에는 숫자만 써주세요." };
+      return;
     }
     if (category === "#") {
       copyErrors = { ...copyErrors, category: "카테고리 선택을 해주세요." };
+      return;
     }
     if (options.trim() === "") {
       copyErrors = { ...copyErrors, options: "옵션은 비워놓을 수 없어요." };
+      return;
     }
 
     const optionList = options.replace(/ /g, "");
@@ -83,7 +89,9 @@ export default function AddProduct() {
           )}
         </div>
         {imageUrl && (
-          <img src={imageUrl} className="mt-3 w-[380px] h-[450px] lg:w-[500px] lg:h-[600px]" alt="쇼핑 이미지" />
+          <div className="mt-3">
+            <DetailImage imageUrl={imageUrl} alt={"제품 이미지"} />
+          </div>
         )}
       </div>
       <div className="w-full mt-4">
