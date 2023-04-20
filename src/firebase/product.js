@@ -25,7 +25,6 @@ export async function addProduct({ title, price, description, options, category,
 
 export async function getProducts() {
   return get(ref(database, "products")).then((snapshot) => {
-    console.log("snapshot", snapshot.val());
     if (snapshot.exists()) {
       const data = snapshot.val();
       const productArray = [];
@@ -42,8 +41,9 @@ export async function getProducts() {
 export async function getProduct(productId) {
   return get(query(ref(database, "products"), orderByKey(), equalTo(productId))).then((snapshot) => {
     if (snapshot.exists()) {
-      const data = snapshot.val();
-      return data;
+      const data = Object.values(snapshot.val())[0];
+
+      return { id: productId, ...data };
     } else {
       return null;
     }
