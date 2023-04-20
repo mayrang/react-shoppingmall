@@ -4,7 +4,7 @@ import { getProducts } from "../firebase/product";
 import ProductCard from "./ProductCard";
 
 export default function ProductList() {
-  const { data, islading, error } = useQuery(["products"], async () => getProducts());
+  const { data } = useQuery(["products"], async () => getProducts());
 
   return (
     <div className="w-full">
@@ -13,7 +13,13 @@ export default function ProductList() {
         {data &&
           data.length > 0 &&
           data.map((product) => (
-            <ProductCard key={product.id} title={product?.title} price={product?.price} imageUrl={product?.imageUrl} />
+            <ProductCard
+              key={product.id}
+              title={product?.title}
+              price={product?.price}
+              id={product.id}
+              imageUrl={product?.imageUrl}
+            />
           ))}
       </div>
     </div>

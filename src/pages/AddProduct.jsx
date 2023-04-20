@@ -4,11 +4,13 @@ import ErrorMessage from "../component/ErrorMessage";
 import { addProduct } from "../firebase/product";
 import { useNavigate } from "react-router-dom";
 import cls from "classnames";
+import { processPrice } from "../util/processPrice";
 
 export default function AddProduct() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("#");
+  const [restPrice, setRestPrice] = useState("0");
   const [description, setDescription] = useState("");
   const [options, setOptions] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
@@ -20,6 +22,11 @@ export default function AddProduct() {
   };
   const handleDelteImage = () => {
     setImageUrl(null);
+  };
+
+  const handlePrice = (e) => {
+    setPrice(e.target.value);
+    setRestPrice(processPrice(e.target.value));
   };
 
   const submitProduct = async (e) => {
@@ -97,9 +104,10 @@ export default function AddProduct() {
           id="price"
           className="border rounded-md p-2 w-full mt-2 outline-none"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={handlePrice}
           placeholder="가격을 입력해주세요(숫자만 입력)"
         />
+        <span className="text-sm font-light ">가격: {restPrice}원</span>
         {errors && errors.price && <ErrorMessage message={errors.price} />}
       </div>
       <div className="w-full mt-4">
@@ -144,6 +152,7 @@ export default function AddProduct() {
           onChange={(e) => setOptions(e.target.value)}
           placeholder="옵션을 입력해주세요(쉼표로 구분)"
         />
+
         {errors && errors.options && <ErrorMessage message={errors.options} />}
       </div>
       <div className="flex items-center justify-end mt-3">

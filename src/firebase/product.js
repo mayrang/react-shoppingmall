@@ -1,4 +1,4 @@
-import { get, getDatabase, push, ref, set } from "firebase/database";
+import { equalTo, get, getDatabase, orderByChild, orderByKey, push, query, ref, set } from "firebase/database";
 import { app } from "./init";
 
 const database = getDatabase(app);
@@ -35,6 +35,17 @@ export async function getProducts() {
       return productArray;
     } else {
       return [];
+    }
+  });
+}
+
+export async function getProduct(productId) {
+  return get(query(ref(database, "products"), orderByKey(), equalTo(productId))).then((snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      return data;
+    } else {
+      return null;
     }
   });
 }
