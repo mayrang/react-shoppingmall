@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { authAtom } from "../recoil/auth";
 import { addOrUpdateCart } from "../firebase/cart";
 import ErrorMessage from "../component/ErrorMessage";
+import useProduct from "../hook/useProduct";
 
 export default function ProductDetail() {
   const [selectOption, setSelectOption] = useState("#");
@@ -16,7 +17,9 @@ export default function ProductDetail() {
 
   const user = useRecoilValue(authAtom);
   const navigate = useNavigate();
-  const { data: product } = useQuery(["productDetail", productId], async () => getProduct(productId));
+  const {
+    productQuery: { data: product },
+  } = useProduct(productId);
   const newPrice = processPrice(product?.price);
 
   const clickCart = () => {

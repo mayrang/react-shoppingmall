@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import cls from "classnames";
 import { processPrice } from "../util/processPrice";
 import DetailImage from "../component/DetailImage";
+import useProduct from "../hook/useProduct";
 
 export default function AddProduct() {
   const [title, setTitle] = useState("");
@@ -17,6 +18,7 @@ export default function AddProduct() {
   const [imageUrl, setImageUrl] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { addProductQuery } = useProduct();
   const changeFile = async (e) => {
     const url = await imageUpload(e.target.files);
     setImageUrl(url);
@@ -58,20 +60,25 @@ export default function AddProduct() {
     if (Object.keys(copyErrors).length > 0) {
       setErrors(copyErrors);
     }
-    const result = await addProduct({
-      title,
-      price,
-      category,
-      description,
-      imageUrl,
-      options: optionList,
-    });
-    if (result === "success") {
-      navigate("/", { replace: true });
-    } else {
-      alert("저장 과정에서의 에러");
-      return;
-    }
+    addProductQuery.mutate(
+      {
+        product: {
+          title,
+          price,
+          category,
+          description,
+          imageUrl,
+          options: optionList,
+        },
+      },
+      {
+        onSuccess: () => navigate("/", { replace: true }),
+        onError: () => {
+          alert("저장 과정에서의 에러");
+          return;
+        },
+      }
+    );
   };
   return (
     <form

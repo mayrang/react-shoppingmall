@@ -2,9 +2,12 @@ import React from "react";
 import { useQuery } from "react-query";
 import { getProducts } from "../firebase/product";
 import ProductCard from "./ProductCard";
+import useProduct from "../hook/useProduct";
 
 export default function ProductList() {
-  const { data } = useQuery(["products"], async () => getProducts());
+  const {
+    productsQuery: { data },
+  } = useProduct();
 
   return (
     <div className="w-full">

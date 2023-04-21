@@ -7,7 +7,7 @@ export async function addProduct({ title, price, description, options, category,
   try {
     const productsRef = ref(database, "products");
     const newProductRef = push(productsRef);
-    await set(newProductRef, {
+    return await set(newProductRef, {
       title,
       price,
       description,
@@ -16,7 +16,6 @@ export async function addProduct({ title, price, description, options, category,
       imageUrl,
       users: null,
     });
-    return "success";
   } catch (err) {
     console.log("err", err);
     return "error;";
