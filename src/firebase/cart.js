@@ -1,28 +1,30 @@
-import { equalTo, get, getDatabase, orderByChild, orderByKey, push, query, ref, set } from "firebase/database";
+import { equalTo, get, getDatabase, orderByChild, orderByKey, push, query, ref, remove, set } from "firebase/database";
 import { app } from "./init";
 
 const database = getDatabase(app);
 
 export function addOrUpdateCart(userId, product) {
-  return set(ref(database, `carts/${userId}/${product.id}`), product);
+  const processProduct = {
+    ...product,
+    count: product?.count ? product.count + 1 : 1,
+  };
+  return set(ref(database, `carts/${userId}/${product.id}`), processProduct);
 }
 
 export function getCarts(userId) {
   return get(ref(database, `carts/${userId}`)).then((snapshot) => {
+    console.log("123123");
     if (snapshot.exists()) {
       const data = snapshot.val();
-      const filteredData = [];
-      for (const key in data) {
-        const index = filteredData.findIndex((item) => item.uid === data[key].uid && item.option === data[key].option);
-        if (index > 0) {
-          filteredData[index] = { ...filteredData[index], count: filteredData[index] + 1 };
-        } else {
-          filteredData.push({ id: key, count: 1, ...data[key] });
-        }
-      }
+      const filteredData = Object.values(data);
+
       return filteredData;
     } else {
       return [];
     }
   });
+}
+
+export function removeCart(userId, productId) {
+  return remove(ref(database, `carts/${userId}/${productId}`));
 }

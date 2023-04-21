@@ -24,7 +24,7 @@ export default function ProductDetail() {
       setErrors({ message: "로그인을 해주세용" });
       return;
     }
-    if (selectOption === "#" && product.options && product.options.tirm() !== "") {
+    if (selectOption === "#" && product.options && product.options?.tirm() !== "") {
       setErrors({ message: "옵션을 선택해주세요" });
       return;
     }
@@ -52,6 +52,7 @@ export default function ProductDetail() {
               >
                 <option value="#">옵션을 선택해주세요</option>
                 {product.options &&
+                  product.options.trim() !== "" &&
                   product.options.split(",").map((option) => (
                     <option key={option} value={option}>
                       {option}
