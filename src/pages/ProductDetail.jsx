@@ -7,10 +7,13 @@ import { processPrice } from "../util/processPrice";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../recoil/auth";
 import { addOrUpdateCart } from "../firebase/cart";
+import ErrorMessage from "../component/ErrorMessage";
 
 export default function ProductDetail() {
   const [selectOption, setSelectOption] = useState("#");
+  const [errors, setErrors] = useState({});
   const { productId } = useParams();
+
   const user = useRecoilValue(authAtom);
   const navigate = useNavigate();
   const { data: product } = useQuery(["productDetail", productId], async () => getProduct(productId));
@@ -18,9 +21,14 @@ export default function ProductDetail() {
 
   const clickCart = () => {
     if (!user && !user.uid) {
+      setErrors({ message: "로그인을 해주세용" });
       return;
     }
-    addOrUpdateCart(user.uid, product);
+    if (selectOption === "#" && product.options && product.options.tirm() !== "") {
+      setErrors({ message: "옵션을 선택해주세요" });
+      return;
+    }
+    addOrUpdateCart(user.uid, { ...product, option: selectOption || "" });
     navigate("/cart");
   };
   return (
@@ -54,6 +62,7 @@ export default function ProductDetail() {
             <button onClick={clickCart} className="mt-10 w-full py-3 bg-signiture text-white">
               장바구니에 추가
             </button>
+            {errors && errors.message && <ErrorMessage message={errors.message} />}
           </div>
         </div>
       )}

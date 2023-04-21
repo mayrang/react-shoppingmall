@@ -41,6 +41,7 @@ export async function getProducts() {
 export async function getProduct(productId) {
   return get(query(ref(database, "products"), orderByKey(), equalTo(productId))).then((snapshot) => {
     if (snapshot.exists()) {
+      console.log("data", Object.values(snapshot.val()));
       const data = Object.values(snapshot.val())[0];
 
       return { id: productId, ...data };
