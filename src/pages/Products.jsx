@@ -1,9 +1,11 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { authAtom } from "../recoil/auth";
+
+import ProductList from "../component/ProductList";
 
 export default function Products() {
-  const user = useRecoilValue(authAtom);
-  console.log(user);
-  return <div></div>;
+  return (
+    <div className="mx-auto px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden mb-8 flex flex-col items-center justify-center ">
+      <ProductList />
+    </div>
+  );
 }

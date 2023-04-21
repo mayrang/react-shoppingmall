@@ -19,6 +19,7 @@ export default function ProductList() {
               price={product?.price}
               id={product.id}
               imageUrl={product?.imageUrl}
+              category={product?.category}
             />
           ))}
       </div>

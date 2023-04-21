@@ -73,7 +73,7 @@ export default function Cart() {
     </div>;
   } else {
     return (
-      <div className="mx-auto px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center">
+      <div className="mx-auto mb-8 px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center">
         <h2 className="w-full text-center py-4 border-b text-lg">내 장바구니</h2>
         {cartList && cartList.length > 0 ? (
           <ul className="w-full border-b">

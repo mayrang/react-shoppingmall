@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 export default function ProtectedPath({ children, adminRequired }) {
   const navigate = useNavigate();
   const user = useRecoilValue(authAtom);
-  if (adminRequired && user && user.isAdmin) {
-    return <>{children}</>;
-  } else {
+  if (!user || (adminRequired && !user.isAdmin)) {
     navigate("/", { replace: true });
     return null;
+  } else {
+    return <>{children}</>;
   }
 }
