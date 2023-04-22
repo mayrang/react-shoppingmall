@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { imageUpload } from "../cloudinary/imageUpload";
 import ErrorMessage from "../component/ErrorMessage";
-import { addProduct } from "../firebase/product";
 import { useNavigate } from "react-router-dom";
 import cls from "classnames";
 import { processPrice } from "../util/processPrice";

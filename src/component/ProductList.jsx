@@ -1,6 +1,5 @@
 import React from "react";
-import { useQuery } from "react-query";
-import { getProducts } from "../firebase/product";
+
 import ProductCard from "./ProductCard";
 import useProduct from "../hook/useProduct";
 
