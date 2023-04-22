@@ -45,7 +45,7 @@ export default function ProductDetail() {
     );
   };
   return (
-    <div className="mx-auto px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center">
+    <div className="mx-auto px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center mb-12">
       {product && Object.keys(product).length > 0 && (
         <div className="w-full md:flex  md:justify-center">
           <div className="md:w-1/2">

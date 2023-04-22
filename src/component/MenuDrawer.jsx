@@ -20,7 +20,9 @@ export default function MenuDrawer({ handleShowMenu }) {
         </Link>
         {user && (
           <>
-            <button className="text-3xl py-3 w-full text-center border-b">Cart</button>
+            <Link to="/cart" className="text-3xl py-3 w-full text-center border-b">
+              Cart
+            </Link>
             {user.isAdmin && (
               <Link to="/products/add" className="text-3xl py-3 w-full text-center border-b">
                 Add Product

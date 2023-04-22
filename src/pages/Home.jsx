@@ -4,9 +4,9 @@ import ProductList from "../component/ProductList";
 
 export default function Home() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden  mb-12">
       <Carousel />
-      <div className="mx-auto mb-8 px-4 w-screen max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center ">
+      <div className="mx-auto px-4 w-screen max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center ">
         <ProductList />
       </div>
     </div>

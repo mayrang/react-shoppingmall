@@ -36,28 +36,24 @@ export default function AddProduct() {
     let copyErrors = {};
     if (title.trim() === "") {
       copyErrors = { ...copyErrors, title: "제품명은 비워놓을 수 없어요." };
-      return;
     }
     if (price.trim() === "") {
       copyErrors = { ...copyErrors, price: "가격은 비워놓을 수 없어요." };
-      return;
     } else if (isNaN(price)) {
       copyErrors = { ...copyErrors, price: "가격에는 숫자만 써주세요." };
-      return;
     }
     if (category === "#") {
       copyErrors = { ...copyErrors, category: "카테고리 선택을 해주세요." };
-      return;
     }
     if (options.trim() === "") {
       copyErrors = { ...copyErrors, options: "옵션은 비워놓을 수 없어요." };
-      return;
     }
 
     const optionList = options.replace(/ /g, "");
 
     if (Object.keys(copyErrors).length > 0) {
       setErrors(copyErrors);
+      return;
     }
     addProductQuery.mutate(
       {
@@ -84,7 +80,7 @@ export default function AddProduct() {
   };
   return (
     <form
-      className="pt-24 xl:pt-36  flex flex-col justify-center w-screen max-w-[1140px] mx-auto px-2"
+      className="pt-24 xl:pt-36  flex flex-col justify-center w-screen max-w-[1140px] mx-auto px-2 mb-3"
       onSubmit={submitProduct}
     >
       <label htmlFor="image">이미지</label>

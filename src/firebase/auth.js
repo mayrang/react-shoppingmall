@@ -1,4 +1,4 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, signInWithRedirect } from "firebase/auth";
 import { app } from "./init";
 import { getDatabase, get, ref, query, equalTo, orderByChild } from "firebase/database";
 
@@ -7,7 +7,7 @@ export const provider = new GoogleAuthProvider();
 const database = getDatabase(app);
 
 export function login() {
-  signInWithPopup(auth, provider).catch(console.error);
+  signInWithRedirect(auth, provider).catch(console.error);
 }
 
 export function logout() {

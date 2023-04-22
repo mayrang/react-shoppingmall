@@ -49,6 +49,7 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
+      console.log(user);
       const updatedUser = user ? await adminUser(user) : null;
 
       setUser(updatedUser);
