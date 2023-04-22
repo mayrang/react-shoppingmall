@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import { getProduct } from "../firebase/product";
+
+import { useParams } from "react-router-dom";
+
 import DetailImage from "../component/DetailImage";
 import { processPrice } from "../util/processPrice";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../recoil/auth";
-import { addOrUpdateCart } from "../firebase/cart";
+
 import ErrorMessage from "../component/ErrorMessage";
 import useProduct from "../hook/useProduct";
+import useCart from "../hook/useCart";
 
 export default function ProductDetail() {
   const [selectOption, setSelectOption] = useState("#");
   const [errors, setErrors] = useState({});
   const { productId } = useParams();
-
+  const [success, setSuccess] = useState();
   const user = useRecoilValue(authAtom);
-  const navigate = useNavigate();
   const {
     productQuery: { data: product },
   } = useProduct(productId);
+  const { updateCartQuery } = useCart();
   const newPrice = processPrice(product?.price);
 
   const clickCart = () => {
@@ -31,8 +32,17 @@ export default function ProductDetail() {
       setErrors({ message: "옵션을 선택해주세요" });
       return;
     }
-    addOrUpdateCart(user.uid, { ...product, option: selectOption || "" });
-    navigate("/cart");
+    updateCartQuery.mutate(
+      { product: { ...product, option: selectOption || "" } },
+      {
+        onSuccess: () => {
+          setSuccess("장바구니에 추가되었습니다.");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 3000);
+        },
+      }
+    );
   };
   return (
     <div className="mx-auto px-4 pt-24 md:pt-32 w-screen  max-w-[1140px] overflow-x-hidden flex flex-col items-center justify-center">
@@ -66,6 +76,11 @@ export default function ProductDetail() {
             <button onClick={clickCart} className="mt-10 w-full py-3 bg-signiture text-white">
               장바구니에 추가
             </button>
+            {success && (
+              <div className="mt-2 text-blue-500 flex items-center">
+                <span className="font-semibold text-sm">{success}</span>
+              </div>
+            )}
             {errors && errors.message && <ErrorMessage message={errors.message} />}
           </div>
         </div>

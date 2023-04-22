@@ -1,4 +1,4 @@
-import { equalTo, get, getDatabase, orderByChild, orderByKey, push, query, ref, set } from "firebase/database";
+import { equalTo, get, getDatabase, orderByKey, push, query, ref, set } from "firebase/database";
 import { app } from "./init";
 
 const database = getDatabase(app);
@@ -17,7 +17,6 @@ export async function addProduct({ title, price, description, options, category,
       users: null,
     });
   } catch (err) {
-    console.log("err", err);
     return "error;";
   }
 }
@@ -38,9 +37,12 @@ export async function getProducts() {
 }
 
 export async function getProduct(productId) {
+  if (!productId) {
+    // productId 값이 없으면 null 반환
+    return null;
+  }
   return get(query(ref(database, "products"), orderByKey(), equalTo(productId))).then((snapshot) => {
     if (snapshot.exists()) {
-      console.log("data", Object.values(snapshot.val()));
       const data = Object.values(snapshot.val())[0];
 
       return { id: productId, ...data };

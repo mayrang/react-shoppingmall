@@ -15,14 +15,13 @@ export const imageUpload = async (files) => {
         "Content-Type": "multipart/form-data",
       },
     };
-    console.log(123);
+
     const cloudName = process.env.REACT_APP_CLOUD_NAME;
 
     const result = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData, config);
 
     return result.data.url;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };

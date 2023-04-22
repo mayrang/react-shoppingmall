@@ -7,13 +7,14 @@ import { useRecoilValue } from "recoil";
 import { authAtom } from "./../recoil/auth";
 import { BsCart3, BsPencilFill } from "react-icons/bs";
 import MenuDrawer from "./MenuDrawer";
-import { useQuery } from "react-query";
-import { getCarts } from "../firebase/cart";
+import useCart from "../hook/useCart";
 
 export default function NavBar() {
   const [showMenu, setShowMenu] = useState(false);
   const user = useRecoilValue(authAtom);
-  const { data: cartList } = useQuery(["cartList"], async () => getCarts(user?.uid));
+  const {
+    cartQuery: { data: cartList },
+  } = useCart();
   const handleShowMenu = () => {
     setShowMenu((prev) => !prev);
   };

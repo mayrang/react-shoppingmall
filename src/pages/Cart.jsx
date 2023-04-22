@@ -1,60 +1,34 @@
 import React from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { addOrUpdateCart, getCarts, removeCart } from "../firebase/cart";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../recoil/auth";
 import { processPrice } from "../util/processPrice";
 import { BsTrashFill, BsFillPlusCircleFill } from "react-icons/bs";
 import getTotalPrice from "../util/getTotalPrice";
 import { FaEquals } from "react-icons/fa";
+import useCart from "../hook/useCart";
 
 export default function Cart() {
   const user = useRecoilValue(authAtom);
-  const queryClient = useQueryClient();
-  const { data: cartList, isLoading, isSuccess } = useQuery(["cartList"], async () => getCarts(user?.uid));
+  const {
+    updateCartQuery,
+    removeCartQuery,
+    cartQuery: { data: cartList, isLoading, isSuccess },
+  } = useCart();
+
   const totalPrice = getTotalPrice(cartList);
-  const { mutate: updateMutate } = useMutation(
-    ({ uid, product }) => {
-      return addOrUpdateCart(uid, product);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["cartList"]);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
 
-  const { mutate: removeMutate } = useMutation(
-    ({ uid, productId }) => {
-      return removeCart(uid, productId);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["cartList"]);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
-
-  console.log("cartList", cartList);
-  console.log("isloading", isLoading, isSuccess);
   const handleUpdateCount = (item, sign) => {
     if (!user && !user?.uid) {
       return;
     }
     if (sign === "+") {
-      updateMutate({ uid: user.uid, product: { ...item, count: item.count + 1 } });
+      updateCartQuery.mutate({ product: { ...item, count: item.count + 1 } });
       return;
     } else if (sign === "-") {
       if (item.count === 1) {
-        removeMutate({ uid: user.uid, productId: item.id });
+        removeCartQuery.mutate({ productId: item.id });
       } else {
-        updateMutate({ uid: user.uid, product: { ...item, count: item.count - 1 } });
+        updateCartQuery.mutate({ product: { ...item, count: item.count - 1 } });
       }
     } else {
       return;
@@ -64,7 +38,7 @@ export default function Cart() {
     if (!user && !user?.uid) {
       return;
     }
-    removeMutate({ uid: user.uid, productId });
+    removeCartQuery.mutate({ productId });
     return;
   };
   if (isLoading && !isSuccess) {

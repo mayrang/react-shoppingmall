@@ -16,13 +16,12 @@ export function logout() {
 export async function adminUser(user) {
   return get(query(ref(database, "admins"), orderByChild("uid"), equalTo(user.uid))) //
     .then((snapshot) => {
-      console.log(snapshot.val());
       if (snapshot.exists()) {
         //const isAdmin = admins.includes(user.uid);
 
         return { ...user, isAdmin: true };
       }
-      console.log(user);
+
       return { ...user, isAdmin: false };
     });
 }

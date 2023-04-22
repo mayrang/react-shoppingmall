@@ -72,7 +72,10 @@ export default function AddProduct() {
         },
       },
       {
-        onSuccess: () => navigate("/", { replace: true }),
+        onSuccess: () => {
+          alert("추가 되었습니다.");
+          navigate("/", { replace: true });
+        },
         onError: () => {
           alert("저장 과정에서의 에러");
           return;
