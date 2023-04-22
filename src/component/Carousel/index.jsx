@@ -24,7 +24,6 @@ export default function Carousel() {
     >
       <div className="w-full h-full relative">
         <img src={"/images/puppy1.jpg"} alt="puppy1" className="object-cover w-full h-[400px] md:h-[500px]" />
-        <h2 className="absolute top-1/3 left-20 font-bold text-2xl">테스트테스트테스트테스트</h2>
       </div>
       <div className="w-full h-full relative">
         <img src={"/images/puppy2.jpg"} alt="puppy2" className="object-cover w-full  h-[400px] md:h-[500px]" />
